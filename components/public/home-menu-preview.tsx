@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/link-button";
 import { RESTAURANT_CONFIG } from "@/lib/config/site";
@@ -11,49 +10,43 @@ type MenuPreviewProps = {
 const copy = {
   es: {
     eyebrow: "Carta",
-    title: "Sabores de puerto, sin complicaciones",
+    title: "Carta de puerto, de las de elegir con hambre",
     description:
-      "Una carta mediterránea reconocible: tapas para compartir, arroces de mesa larga y pescado preparado con respeto al producto.",
+      "Hemos resumido la carta en lo que normalmente decide una mesa: algo para compartir, un arroz al centro o pescado de costa.",
     button: "Ver carta completa",
-    cards: [
+    groups: [
       {
-        title: "Tapas",
-        description: "Entrantes, ensaladas, mariscos y platos para abrir mesa.",
-        imagePosition: "object-[35%_72%]"
+        title: "Para empezar",
+        items: ["Pulpo a la gallega", "Gambas al ajillo", "Mojama", "Ensalada de ventresca"]
       },
       {
         title: "Arroces",
-        description: "Arroces marineros y especialidades pensadas para compartir.",
-        imagePosition: "object-[55%_70%]"
+        items: ["Arroz con bogavante", "Arroz caldoso", "Paella mixta", "Arroz negro"]
       },
       {
         title: "Pescados",
-        description: "Pescado fresco, plancha y recetas tradicionales de costa.",
-        imagePosition: "object-[68%_68%]"
+        items: ["Dorada", "Lubina", "Rape", "Gallo Pedro"]
       }
     ]
   },
   en: {
     eyebrow: "Menu",
-    title: "Harbour flavours, easy to choose",
+    title: "A harbour menu made for choosing hungry",
     description:
-      "A recognisable Mediterranean menu: tapas to share, rice dishes for the table and fish cooked with respect for the product.",
+      "A quick view of what tables usually decide first: something to share, a rice dish for the centre or coastal fish.",
     button: "View full menu",
-    cards: [
+    groups: [
       {
-        title: "Tapas",
-        description: "Starters, salads, seafood and plates to begin the meal.",
-        imagePosition: "object-[35%_72%]"
+        title: "To start",
+        items: ["Galician-style octopus", "Garlic prawns", "Mojama", "Tuna belly salad"]
       },
       {
         title: "Rice dishes",
-        description: "Seafood rice dishes and house specialities to share.",
-        imagePosition: "object-[55%_70%]"
+        items: ["Rice with lobster", "Seafood broth rice", "Mixed paella", "Black rice"]
       },
       {
         title: "Fish",
-        description: "Fresh fish, grill and traditional coastal recipes.",
-        imagePosition: "object-[68%_68%]"
+        items: ["Sea bream", "Sea bass", "Monkfish", "John Dory"]
       }
     ]
   }
@@ -63,9 +56,9 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
   const t = copy[locale];
 
   return (
-    <section id="carta" className="bg-paper px-4 py-14 sm:px-6 md:py-20">
-      <div className="mx-auto max-w-6xl">
-        <div className="max-w-2xl">
+    <section id="carta" className="bg-[#fbfaf6] px-4 py-14 sm:px-6 md:py-20">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+        <div className="lg:sticky lg:top-28">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-terracotta-700">
             {t.eyebrow}
           </p>
@@ -75,44 +68,44 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
           <p className="mt-4 text-base leading-7 text-harbor-900/70">
             {t.description}
           </p>
-        </div>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {t.cards.map((card) => (
-            <article
-              className="group overflow-hidden rounded-[1.35rem] bg-white shadow-[0_20px_55px_rgba(23,59,58,0.12)]"
-              key={card.title}
+          <div className="mt-7">
+            <LinkButton
+              analyticsEvent="menu_button_click"
+              className="gap-2 rounded-full bg-harbor-900"
+              external
+              href={RESTAURANT_CONFIG.menuUrl}
             >
-              <div className="relative h-52 overflow-hidden">
-                <Image
-                  alt={card.title}
-                  className={`h-full w-full object-cover transition duration-500 group-hover:scale-105 ${card.imagePosition}`}
-                  fill
-                  sizes="(min-width: 768px) 33vw, calc(100vw - 32px)"
-                  src="/hero-restaurant.png"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-harbor-900/70 to-transparent" />
-                <h3 className="absolute bottom-4 left-4 font-serif text-3xl font-bold text-white">
-                  {card.title}
-                </h3>
-              </div>
-              <p className="p-5 text-sm leading-6 text-harbor-900/70">
-                {card.description}
-              </p>
-            </article>
-          ))}
+              {t.button}
+              <ArrowUpRight aria-hidden="true" size={18} />
+            </LinkButton>
+          </div>
         </div>
 
-        <div className="mt-8">
-          <LinkButton
-            analyticsEvent="menu_button_click"
-            className="gap-2 bg-harbor-900"
-            external
-            href={RESTAURANT_CONFIG.menuUrl}
-          >
-            {t.button}
-            <ArrowUpRight aria-hidden="true" size={18} />
-          </LinkButton>
+        <div className="border-y border-harbor-900/15">
+          {t.groups.map((group) => (
+            <section
+              className="grid gap-5 border-b border-harbor-900/10 py-7 last:border-b-0 md:grid-cols-[13rem_1fr]"
+              key={group.title}
+            >
+              <h3 className="font-serif text-3xl font-bold text-harbor-900">
+                {group.title}
+              </h3>
+              <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                {group.items.map((item) => (
+                  <li
+                    className="flex items-baseline justify-between gap-4 text-base font-semibold text-harbor-900"
+                    key={item}
+                  >
+                    <span>{item}</span>
+                    <span className="h-px flex-1 border-b border-dotted border-harbor-900/20" />
+                    <span className="text-sm font-bold text-harbor-900/40">
+                      según carta
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
       </div>
     </section>

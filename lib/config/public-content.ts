@@ -22,10 +22,8 @@ export const PUBLIC_CONTENT = {
         "Mariscos, arroces y pescado fresco en una mesa tranquila frente al puerto. Reserva en un minuto y nosotros confirmamos tu mesa.",
       reserve: "Reservar mesa",
       menu: "Ver carta",
-      directions: "Cómo llegar",
-      scroll: "Reservar ahora"
+      directions: "Cómo llegar"
     },
-    trust: ["Producto del mar", "Arroces y cocina tradicional", "Reserva con confirmación"],
     menuPage: {
       eyebrow: "Carta directa",
       title: "Carta del Restaurante Rincón del Puerto",
@@ -63,10 +61,8 @@ export const PUBLIC_CONTENT = {
         "Seafood, rice dishes and fresh fish at a calm table by the harbour. Book in a minute and the team will confirm your table.",
       reserve: "Book a table",
       menu: "View menu",
-      directions: "Get directions",
-      scroll: "Book now"
+      directions: "Get directions"
     },
-    trust: ["Seafood cooking", "Rice and traditional dishes", "Booking confirmation"],
     menuPage: {
       eyebrow: "Direct menu",
       title: "Restaurante Rincón del Puerto menu",

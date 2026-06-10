@@ -1,5 +1,4 @@
 import { Anchor } from "lucide-react";
-import { RESTAURANT_CONFIG } from "@/lib/config/site";
 import { cn } from "@/lib/utils";
 
 type BrandMarkProps = {
@@ -28,7 +27,7 @@ export function BrandMark({ compact = false, inverted = false }: BrandMarkProps)
             inverted ? "text-white" : "text-harbor-900"
           )}
         >
-          {RESTAURANT_CONFIG.name}
+          Rincón del Puerto
         </span>
         <span
           className={cn(

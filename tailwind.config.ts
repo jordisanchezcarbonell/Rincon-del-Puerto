@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#f7fbfa",
-        pearl: "#eef6f5",
+        paper: "#f6f1e8",
+        pearl: "#fbfaf6",
         harbor: {
           50: "#f3f8f8",
           100: "#d7e9e8",
