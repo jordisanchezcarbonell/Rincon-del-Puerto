@@ -10,6 +10,7 @@ import { isReservationTimeAvailable } from "@/lib/reservations/availability";
 import { isGroupRequest } from "@/lib/reservations/policy";
 import { createSupabaseServiceClient } from "@/lib/supabase/service";
 import { formDataToReservationInput } from "@/lib/validations/reservation";
+import { PUBLIC_CONTENT, resolveLocale } from "@/lib/config/public-content";
 
 export type ReservationActionState = {
   ok: boolean;
@@ -20,7 +21,11 @@ export async function createReservationAction(
   _previousState: ReservationActionState,
   formData: FormData
 ): Promise<ReservationActionState> {
-  const locale = formData.get("locale") === "en" ? "en" : "es";
+  const localeValue = formData.get("locale");
+  const locale = resolveLocale(
+    typeof localeValue === "string" ? localeValue : undefined
+  );
+  const errors = PUBLIC_CONTENT[locale].reservationForm.errors;
 
   try {
     const values = formDataToReservationInput(formData);
@@ -34,10 +39,7 @@ export async function createReservationAction(
     if (!available) {
       return {
         ok: false,
-        message:
-          locale === "en"
-            ? "That time is no longer available. Please choose another one."
-            : "Ese horario ya no está disponible. Elige otro, por favor."
+        message: errors.slotTaken
       };
     }
 
@@ -68,19 +70,13 @@ export async function createReservationAction(
       if (error.code === "23505") {
         return {
           ok: false,
-          message:
-            locale === "en"
-              ? "A similar active booking already exists for that phone and time."
-              : "Ya existe una reserva activa con ese teléfono para ese horario."
+          message: errors.duplicate
         };
       }
 
       return {
         ok: false,
-        message:
-          locale === "en"
-            ? "We could not save your request. Please try again."
-            : "No hemos podido guardar la solicitud. Inténtalo de nuevo."
+        message: errors.saveFailed
       };
     }
 
@@ -104,18 +100,15 @@ export async function createReservationAction(
     if (error instanceof ZodError) {
       return {
         ok: false,
-        message: error.issues[0]?.message ?? "Datos de reserva no válidos"
+        message: error.issues[0]?.message ?? errors.invalid
       };
     }
 
     return {
       ok: false,
-      message:
-        locale === "en"
-          ? "Unexpected error while creating the booking request."
-          : "Error inesperado al crear la solicitud de reserva."
+      message: errors.unexpected
     };
   }
 
-  redirect(`/reserva/confirmacion?lang=${locale}`);
+  redirect("/reserva/confirmacion");
 }

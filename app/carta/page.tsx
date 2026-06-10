@@ -3,23 +3,19 @@ import { AnalyticsTracker } from "@/components/public/analytics-tracker";
 import { NativeMenu } from "@/components/public/native-menu";
 import { SiteFooter } from "@/components/public/site-footer";
 import { SiteHeader } from "@/components/public/site-header";
-import { resolveLocale } from "@/lib/config/public-content";
-import { RESTAURANT_CONFIG } from "@/lib/config/site";
+import { getServerLocale } from "@/lib/config/locale";
+import { PUBLIC_CONTENT } from "@/lib/config/public-content";
 
-export const metadata: Metadata = {
-  title: "Carta",
-  description: `Consulta la carta de ${RESTAURANT_CONFIG.name} directamente en la web.`
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getServerLocale();
+  return {
+    title: PUBLIC_CONTENT[locale].metadata.menu.title,
+    description: PUBLIC_CONTENT[locale].metadata.menu.description
+  };
+}
 
-type MenuPageProps = {
-  searchParams?: Promise<{
-    lang?: string;
-  }>;
-};
-
-export default async function MenuPage({ searchParams }: MenuPageProps) {
-  const params = await searchParams;
-  const locale = resolveLocale(params?.lang);
+export default async function MenuPage() {
+  const locale = await getServerLocale();
 
   return (
     <>

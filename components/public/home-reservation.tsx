@@ -16,6 +16,7 @@ export function HomeReservation({
   locale
 }: HomeReservationProps) {
   const t = PUBLIC_CONTENT[locale].reservation;
+  const hours = PUBLIC_CONTENT[locale].hours.lines;
 
   return (
     <section
@@ -75,7 +76,7 @@ export function HomeReservation({
                 {t.hoursTitle}
               </p>
               <ul className="mt-3 grid gap-2 text-sm text-white/85">
-                {RESTAURANT_CONFIG.reservationHours.map((line) => (
+                {hours.map((line) => (
                   <li
                     key={line}
                     className="flex items-baseline gap-3 border-b border-dotted border-white/15 pb-2 last:border-b-0 last:pb-0"

@@ -1,7 +1,9 @@
 import { CheckCircle2, XCircle } from "lucide-react";
-import { cancelReservationByTokenAction } from "@/app/cancelar/actions";
+import { CancelReservationForm } from "@/components/reservations/cancel-reservation-form";
 import { SiteFooter } from "@/components/public/site-footer";
 import { SiteHeader } from "@/components/public/site-header";
+import { getServerLocale } from "@/lib/config/locale";
+import { PUBLIC_CONTENT, format } from "@/lib/config/public-content";
 import { mapReservation } from "@/lib/reservations/mappers";
 import { createSupabaseServiceClient } from "@/lib/supabase/service";
 
@@ -22,6 +24,9 @@ export default async function CancelReservationPage({
 }: CancelPageProps) {
   const { token } = await params;
   const query = await searchParams;
+  const locale = await getServerLocale();
+  const t = PUBLIC_CONTENT[locale].cancel;
+
   const supabase = createSupabaseServiceClient();
   const { data } = await supabase
     .from("reservations")
@@ -30,54 +35,57 @@ export default async function CancelReservationPage({
     .maybeSingle();
 
   const reservation = data ? mapReservation(data) : null;
-  const cancelled = query?.status === "cancelled" || reservation?.status === "cancelled";
+  const cancelled =
+    query?.status === "cancelled" || reservation?.status === "cancelled";
 
   return (
     <>
-      <SiteHeader currentPath="/" locale="es" />
+      <SiteHeader currentPath="/" locale={locale} />
       <main className="grid min-h-[70vh] place-items-center bg-paper px-4 py-12">
         <section className="max-w-xl rounded-lg border border-harbor-900/10 bg-white p-8 text-center shadow-soft">
           {!reservation ? (
             <>
               <XCircle className="mx-auto text-red-700" size={46} />
               <h1 className="mt-4 text-3xl font-bold text-harbor-900">
-                Reserva no encontrada
+                {t.notFoundTitle}
               </h1>
-              <p className="mt-3 text-harbor-900/70">
-                El enlace no es válido o la reserva ya no está disponible.
-              </p>
+              <p className="mt-3 text-harbor-900/70">{t.notFoundDescription}</p>
             </>
           ) : cancelled ? (
             <>
               <CheckCircle2 className="mx-auto text-harbor-600" size={46} />
               <h1 className="mt-4 text-3xl font-bold text-harbor-900">
-                Reserva cancelada
+                {t.cancelledTitle}
               </h1>
               <p className="mt-3 text-harbor-900/70">
-                Hemos registrado la cancelación para el {reservation.date} a las{" "}
-                {reservation.time}.
+                {format(t.cancelledDescription, {
+                  date: reservation.date,
+                  time: reservation.time
+                })}
               </p>
             </>
           ) : (
             <>
               <h1 className="text-3xl font-bold text-harbor-900">
-                Cancelar reserva
+                {t.confirmTitle}
               </h1>
               <p className="mt-3 text-harbor-900/70">
-                Vas a cancelar la reserva de {reservation.name} para el{" "}
-                {reservation.date} a las {reservation.time}.
+                {format(t.confirmDescription, {
+                  name: reservation.name,
+                  date: reservation.date,
+                  time: reservation.time
+                })}
               </p>
-              <form action={cancelReservationByTokenAction} className="mt-6">
-                <input name="token" type="hidden" value={token} />
-                <button className="min-h-12 rounded-lg bg-red-700 px-5 py-3 text-sm font-semibold text-white">
-                  Confirmar cancelación
-                </button>
-              </form>
+              <CancelReservationForm
+                token={token}
+                label={t.confirmButton}
+                pendingLabel={t.pendingButton}
+              />
             </>
           )}
         </section>
       </main>
-      <SiteFooter locale="es" />
+      <SiteFooter locale={locale} />
     </>
   );
 }

@@ -1,70 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState, useActionState } from "react";
-import { AlertCircle, CalendarCheck } from "lucide-react";
+import { AlertCircle, CalendarCheck, Loader2 } from "lucide-react";
 import { createReservationAction } from "@/app/reservar/actions";
 import { GROUP_REQUEST_GUEST_THRESHOLD } from "@/lib/reservations/policy";
+import { PUBLIC_CONTENT, type Locale } from "@/lib/config/public-content";
 import type { AvailabilitySlot } from "@/types/domain";
 
 type ReservationFormProps = {
-  locale: "es" | "en";
+  locale: Locale;
   initialDate: string;
   initialSlots: AvailabilitySlot[];
-};
-
-const copy = {
-  es: {
-    title: "Solicitar reserva",
-    description:
-      "El restaurante confirmará tu solicitud. También puedes seguir reservando por teléfono.",
-    name: "Nombre",
-    phone: "Teléfono",
-    email: "Email opcional",
-    date: "Fecha",
-    time: "Hora",
-    guests: "Comensales",
-    seating: "Preferencia",
-    terrace: "Terraza",
-    inside: "Interior",
-    noPreference: "Sin preferencia",
-    notes: "Observaciones",
-    allergies: "Alergias",
-    highChair: "Necesito trona",
-    privacy: "Acepto la política básica de privacidad",
-    group:
-      "Para grupos de más de 8 personas revisaremos la solicitud de forma personalizada.",
-    groupDetails: "Información adicional del grupo",
-    submit: "Enviar solicitud",
-    loading: "Cargando horarios...",
-    noSlots: "No hay horarios disponibles para esta fecha.",
-    errorSlots: "No se han podido cargar los horarios."
-  },
-  en: {
-    title: "Request a booking",
-    description:
-      "The restaurant will confirm your request. Phone bookings remain available.",
-    name: "Name",
-    phone: "Phone",
-    email: "Optional email",
-    date: "Date",
-    time: "Time",
-    guests: "Guests",
-    seating: "Preference",
-    terrace: "Terrace",
-    inside: "Inside",
-    noPreference: "No preference",
-    notes: "Notes",
-    allergies: "Allergies",
-    highChair: "I need a high chair",
-    privacy: "I accept the basic privacy policy",
-    group:
-      "For groups over 8 people, the restaurant will review the request personally.",
-    groupDetails: "Additional group information",
-    submit: "Send request",
-    loading: "Loading times...",
-    noSlots: "No available times for this date.",
-    errorSlots: "Could not load available times."
-  }
 };
 
 export function ReservationForm({
@@ -80,7 +26,7 @@ export function ReservationForm({
   const [slots, setSlots] = useState(initialSlots);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [slotsError, setSlotsError] = useState(false);
-  const t = copy[locale];
+  const t = PUBLIC_CONTENT[locale].reservationForm;
 
   useEffect(() => {
     let ignore = false;
@@ -228,12 +174,22 @@ export function ReservationForm({
       </label>
 
       <button
-        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-harbor-900 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-harbor-600 disabled:cursor-not-allowed disabled:opacity-60"
+        aria-busy={pending}
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-harbor-900 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-harbor-600 disabled:cursor-not-allowed disabled:opacity-70"
         disabled={pending || loadingSlots || availableSlots.length === 0}
         type="submit"
       >
-        <CalendarCheck aria-hidden="true" size={18} />
-        {t.submit}
+        {pending ? (
+          <>
+            <Loader2 aria-hidden="true" className="animate-spin" size={18} />
+            {t.submitting}
+          </>
+        ) : (
+          <>
+            <CalendarCheck aria-hidden="true" size={18} />
+            {t.submit}
+          </>
+        )}
       </button>
     </form>
   );

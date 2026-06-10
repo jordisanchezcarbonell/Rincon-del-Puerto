@@ -9,19 +9,11 @@ type SiteFooterProps = {
 
 export function SiteFooter({ locale }: SiteFooterProps) {
   const content = PUBLIC_CONTENT[locale];
+  const hours = content.hours.lines;
   const quickLinks = [
-    {
-      href: `/carta?lang=${locale}`,
-      label: content.nav.menu
-    },
-    {
-      href: `/?lang=${locale}#reservar`,
-      label: content.nav.reserve
-    },
-    {
-      href: `/?lang=${locale}#ubicacion`,
-      label: content.nav.location
-    }
+    { href: "/carta", label: content.nav.menu },
+    { href: "/#reservar", label: content.nav.reserve },
+    { href: "/#ubicacion", label: content.nav.location }
   ];
 
   return (
@@ -65,7 +57,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             {content.footer.hoursTitle}
           </p>
           <ul className="grid gap-1.5 leading-6">
-            {RESTAURANT_CONFIG.reservationHours.map((line) => (
+            {hours.map((line) => (
               <li key={line}>{line}</li>
             ))}
           </ul>
@@ -90,11 +82,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-2 px-4 py-5 text-xs text-white/50 sm:flex-row sm:items-center sm:px-6">
           <span>© {new Date().getFullYear()} {RESTAURANT_CONFIG.name}.</span>
-          <span className="font-serif italic">
-            {locale === "es"
-              ? "Puerto de Garrucha, Almería."
-              : "Garrucha harbour, Almería."}
-          </span>
+          <span className="font-serif italic">{content.footer.region}</span>
         </div>
       </div>
     </footer>

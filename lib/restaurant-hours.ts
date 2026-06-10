@@ -9,13 +9,14 @@ const SERVICE_WINDOWS = [
 
 const WEEKDAY_NAMES = {
   es: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
-  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  ca: ["diumenge", "dilluns", "dimarts", "dimecres", "dijous", "divendres", "dissabte"]
 } as const;
 
 export type RestaurantStatus = {
   openNow: boolean;
   closedToday: boolean;
-  label: { es: string; en: string };
+  label: { es: string; en: string; ca: string };
 };
 
 function getMadridNow() {
@@ -55,7 +56,7 @@ export function getRestaurantStatus(): RestaurantStatus {
         return {
           openNow: true,
           closedToday: false,
-          label: { es: "Abierto ahora", en: "Open now" }
+          label: { es: "Abierto ahora", en: "Open now", ca: "Obert ara" }
         };
       }
     }
@@ -67,7 +68,8 @@ export function getRestaurantStatus(): RestaurantStatus {
         closedToday: false,
         label: {
           es: `Hoy abrimos a las ${time}`,
-          en: `Opens today at ${time}`
+          en: `Opens today at ${time}`,
+          ca: `Avui obrim a les ${time}`
         }
       };
     }
@@ -80,17 +82,17 @@ export function getRestaurantStatus(): RestaurantStatus {
   const nextDay = (weekday + daysAhead) % 7;
   const firstTime = formatMinutes(SERVICE_WINDOWS[0].start);
 
-  const esDay =
-    daysAhead === 1 ? "mañana" : WEEKDAY_NAMES.es[nextDay];
-  const enDay =
-    daysAhead === 1 ? "tomorrow" : WEEKDAY_NAMES.en[nextDay];
+  const esDay = daysAhead === 1 ? "mañana" : WEEKDAY_NAMES.es[nextDay];
+  const enDay = daysAhead === 1 ? "tomorrow" : WEEKDAY_NAMES.en[nextDay];
+  const caDay = daysAhead === 1 ? "demà" : WEEKDAY_NAMES.ca[nextDay];
 
   return {
     openNow: false,
     closedToday: true,
     label: {
       es: `Reabrimos ${esDay} a las ${firstTime}`,
-      en: `Reopens ${enDay} at ${firstTime}`
+      en: `Reopens ${enDay} at ${firstTime}`,
+      ca: `Tornem a obrir ${caDay} a les ${firstTime}`
     }
   };
 }

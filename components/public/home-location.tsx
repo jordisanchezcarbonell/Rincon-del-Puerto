@@ -2,6 +2,8 @@ import { ArrowUpRight, MapPin, Phone } from "lucide-react";
 import { RESTAURANT_CONFIG } from "@/lib/config/site";
 import { PUBLIC_CONTENT, type Locale } from "@/lib/config/public-content";
 
+
+
 type HomeLocationProps = {
   locale: Locale;
 };
@@ -11,6 +13,7 @@ const MAP_EMBED_URL =
 
 export function HomeLocation({ locale }: HomeLocationProps) {
   const t = PUBLIC_CONTENT[locale].location;
+  const hours = PUBLIC_CONTENT[locale].hours.lines;
 
   return (
     <section
@@ -44,7 +47,7 @@ export function HomeLocation({ locale }: HomeLocationProps) {
                 {t.hoursLabel}
               </dt>
               <dd className="grid gap-1 text-base text-harbor-900">
-                {RESTAURANT_CONFIG.reservationHours.map((line) => (
+                {hours.map((line) => (
                   <span key={line} className="flex items-baseline gap-3">
                     <span aria-hidden="true" className="font-serif text-xs text-terracotta-700">
                       ◆

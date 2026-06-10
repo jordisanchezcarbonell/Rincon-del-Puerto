@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import { BrandMark } from "@/components/public/brand-mark";
+import { LanguageSwitcher } from "@/components/public/language-switcher";
 import { RESTAURANT_CONFIG } from "@/lib/config/site";
 import { PUBLIC_CONTENT, type Locale } from "@/lib/config/public-content";
 import { getRestaurantStatus } from "@/lib/restaurant-hours";
@@ -12,11 +13,9 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ locale, currentPath }: SiteHeaderProps) {
   const content = PUBLIC_CONTENT[locale];
-  const menuHref = `/carta?lang=${locale}`;
-  const reserveHref =
-    currentPath === "/" ? "#reservar" : `/?lang=${locale}#reservar`;
-  const locationHref =
-    currentPath === "/" ? "#ubicacion" : `/?lang=${locale}#ubicacion`;
+  const menuHref = "/carta";
+  const reserveHref = currentPath === "/" ? "#reservar" : "/#reservar";
+  const locationHref = currentPath === "/" ? "#ubicacion" : "/#ubicacion";
   const status = getRestaurantStatus();
   const statusLabel = status.label[locale];
 
@@ -49,17 +48,18 @@ export function SiteHeader({ locale, currentPath }: SiteHeaderProps) {
             />
             {statusLabel}
           </span>
+          <LanguageSwitcher locale={locale} />
         </div>
       </div>
 
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-        <Link className="flex min-w-0 items-center gap-2" href={`/?lang=${locale}`}>
+        <Link className="flex min-w-0 items-center gap-2" href="/">
           <BrandMark compact />
         </Link>
 
         <nav
           className="hidden items-center gap-7 text-sm font-medium text-harbor-900/75 md:flex"
-          aria-label="Principal"
+          aria-label={content.nav.ariaLabel}
         >
           <Link
             className="transition hover:text-harbor-900"

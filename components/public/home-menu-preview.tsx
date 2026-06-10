@@ -28,7 +28,7 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
           <Link
             className="group inline-flex items-center gap-2 self-start border border-terracotta-700 bg-harbor-900 px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-soft transition hover:bg-tide-700 md:self-auto"
             data-analytics-event="menu_button_click"
-            href={`/carta?lang=${locale}`}
+            href="/carta"
           >
             {t.cta}
             <ArrowUpRight aria-hidden="true" size={16} />

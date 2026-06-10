@@ -51,7 +51,7 @@ export function NativeMenu({ locale }: NativeMenuProps) {
               <LinkButton
                 analyticsEvent="reservation_button_click"
                 className="gap-2"
-                href={`/reservar?lang=${locale}`}
+                href="/reservar"
               >
                 <CalendarCheck aria-hidden="true" size={18} />
                 {content.reserve}

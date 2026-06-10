@@ -3,27 +3,23 @@ import { AnalyticsTracker } from "@/components/public/analytics-tracker";
 import { ReservationForm } from "@/components/reservations/reservation-form";
 import { SiteFooter } from "@/components/public/site-footer";
 import { SiteHeader } from "@/components/public/site-header";
-import { resolveLocale } from "@/lib/config/public-content";
-import { RESTAURANT_CONFIG } from "@/lib/config/site";
+import { getServerLocale } from "@/lib/config/locale";
+import { PUBLIC_CONTENT } from "@/lib/config/public-content";
 import { getPilotRestaurant } from "@/lib/restaurants";
 import { getAvailabilityForDate } from "@/lib/reservations/availability";
 
-export const metadata: Metadata = {
-  title: "Reservar mesa",
-  description: `Solicita una reserva en ${RESTAURANT_CONFIG.name}.`
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getServerLocale();
+  return {
+    title: PUBLIC_CONTENT[locale].metadata.reserve.title,
+    description: PUBLIC_CONTENT[locale].metadata.reserve.description
+  };
+}
 
 export const dynamic = "force-dynamic";
 
-type ReservePageProps = {
-  searchParams?: Promise<{
-    lang?: string;
-  }>;
-};
-
-export default async function ReservePage({ searchParams }: ReservePageProps) {
-  const params = await searchParams;
-  const locale = resolveLocale(params?.lang);
+export default async function ReservePage() {
+  const locale = await getServerLocale();
   const initialDate = getTodayISODate();
   const restaurant = await getPilotRestaurant();
   const slots = await getAvailabilityForDate(restaurant.id, initialDate);

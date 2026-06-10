@@ -6,27 +6,24 @@ import { HomeMenuPreview } from "@/components/public/home-menu-preview";
 import { HomeReservation } from "@/components/public/home-reservation";
 import { SiteFooter } from "@/components/public/site-footer";
 import { SiteHeader } from "@/components/public/site-header";
-import { resolveLocale } from "@/lib/config/public-content";
+import { getServerLocale } from "@/lib/config/locale";
+import { PUBLIC_CONTENT } from "@/lib/config/public-content";
 import { RESTAURANT_CONFIG } from "@/lib/config/site";
 import { getAvailabilityForDate } from "@/lib/reservations/availability";
 import { getPilotRestaurant } from "@/lib/restaurants";
 
-export const metadata: Metadata = {
-  title: "Inicio",
-  description: RESTAURANT_CONFIG.description
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getServerLocale();
+  return {
+    title: PUBLIC_CONTENT[locale].metadata.home.title,
+    description: RESTAURANT_CONFIG.description
+  };
+}
 
 export const dynamic = "force-dynamic";
 
-type HomePageProps = {
-  searchParams?: Promise<{
-    lang?: string;
-  }>;
-};
-
-export default async function HomePage({ searchParams }: HomePageProps) {
-  const params = await searchParams;
-  const locale = resolveLocale(params?.lang);
+export default async function HomePage() {
+  const locale = await getServerLocale();
   const initialDate = getTodayISODate();
   const restaurant = await getPilotRestaurant();
   const slots = await getAvailabilityForDate(restaurant.id, initialDate);

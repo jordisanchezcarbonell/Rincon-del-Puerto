@@ -22,7 +22,7 @@ export function HomeHero({ locale }: HomeHeroProps) {
             <span aria-hidden="true" className="h-px w-16 bg-terracotta-700/70" />
           </div>
           <p className="mt-4 text-xs font-semibold uppercase tracking-[0.22em] text-terracotta-700">
-            Desde 1998 · frente a la lonja
+            {content.hero.since}
           </p>
 
           <h1 className="mt-5 font-serif text-6xl font-bold uppercase leading-[0.86] tracking-[0.01em] text-harbor-900 sm:text-7xl lg:text-[6.25rem]">
@@ -46,7 +46,7 @@ export function HomeHero({ locale }: HomeHeroProps) {
             <Link
               className="inline-flex min-h-[3.5rem] items-center justify-center border border-terracotta-700 bg-white/70 px-7 text-sm font-semibold uppercase tracking-[0.14em] text-harbor-900 backdrop-blur transition hover:bg-white"
               data-analytics-event="menu_button_click"
-              href={`/carta?lang=${locale}`}
+              href="/carta"
             >
               ☰ {content.hero.menu}
             </Link>
@@ -115,9 +115,7 @@ export function HomeHero({ locale }: HomeHeroProps) {
           </div>
 
           <p className="mt-3 text-xs italic text-harbor-900/55">
-            {locale === "es"
-              ? "Terraza junto al puerto · arroces al centro · pescado de lonja."
-              : "Terrace by the harbour · rice in the centre · fish from the market."}
+            {content.hero.caption}
           </p>
         </div>
       </div>

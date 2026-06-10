@@ -1,48 +1,15 @@
 "use client";
 
 import { useActionState, useEffect, useMemo, useState } from "react";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import { createReservationAction } from "@/app/reservar/actions";
-import type { Locale } from "@/lib/config/public-content";
+import { PUBLIC_CONTENT, type Locale } from "@/lib/config/public-content";
 import type { AvailabilitySlot } from "@/types/domain";
 
 type LandingReservationFormProps = {
   initialDate: string;
   initialSlots: AvailabilitySlot[];
   locale: Locale;
-};
-
-const copy = {
-  es: {
-    date: "Fecha",
-    time: "Hora",
-    guests: "Personas",
-    name: "Nombre",
-    phone: "Teléfono",
-    notes: "Comentarios",
-    notesPlaceholder:
-      "Una mesa en la terraza, hora flexible, ocasión especial...",
-    privacy: "Acepto la política básica de privacidad",
-    submit: "Enviar solicitud",
-    loading: "Cargando horarios...",
-    noSlots: "No hay horarios disponibles para esta fecha.",
-    errorSlots: "No se han podido cargar los horarios."
-  },
-  en: {
-    date: "Date",
-    time: "Time",
-    guests: "Guests",
-    name: "Name",
-    phone: "Phone",
-    notes: "Comments",
-    notesPlaceholder:
-      "A table on the terrace, flexible time, special occasion...",
-    privacy: "I accept the basic privacy policy",
-    submit: "Send request",
-    loading: "Loading times...",
-    noSlots: "No available times for this date.",
-    errorSlots: "Could not load available times."
-  }
 };
 
 const FIELD_INPUT_CLASS =
@@ -64,7 +31,7 @@ export function LandingReservationForm({
   const [slots, setSlots] = useState(initialSlots);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [slotsError, setSlotsError] = useState(false);
-  const t = copy[locale];
+  const t = PUBLIC_CONTENT[locale].reservationForm;
 
   useEffect(() => {
     let ignore = false;
@@ -160,7 +127,7 @@ export function LandingReservationForm({
 
         <div className="grid gap-2">
           <label className={FIELD_LABEL_CLASS} htmlFor="reservation-guests">
-            {t.guests}
+            {t.guestsShort}
           </label>
           <input
             id="reservation-guests"
@@ -214,7 +181,7 @@ export function LandingReservationForm({
 
       <div className="grid gap-2">
         <label className={FIELD_LABEL_CLASS} htmlFor="reservation-notes">
-          {t.notes}
+          {t.notesShort}
         </label>
         <textarea
           id="reservation-notes"
@@ -235,11 +202,19 @@ export function LandingReservationForm({
       </label>
 
       <button
-        className="inline-flex min-h-[3.5rem] items-center justify-center border border-terracotta-700 bg-paper px-8 text-sm font-semibold uppercase tracking-[0.18em] text-harbor-900 shadow-soft transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+        aria-busy={pending}
+        className="inline-flex min-h-[3.5rem] items-center justify-center gap-2 border border-terracotta-700 bg-paper px-8 text-sm font-semibold uppercase tracking-[0.18em] text-harbor-900 shadow-soft transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-70"
         disabled={pending || loadingSlots || availableSlots.length === 0}
         type="submit"
       >
-        ⚓ {t.submit}
+        {pending ? (
+          <>
+            <Loader2 aria-hidden="true" className="animate-spin" size={16} />
+            {t.submitting}
+          </>
+        ) : (
+          <>⚓ {t.submit}</>
+        )}
       </button>
     </form>
   );
