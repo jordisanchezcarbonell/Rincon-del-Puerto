@@ -1,9 +1,8 @@
 "use client";
 
 import { useActionState, useEffect, useMemo, useState } from "react";
-import { AlertCircle, Phone } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { createReservationAction } from "@/app/reservar/actions";
-import { RESTAURANT_CONFIG } from "@/lib/config/site";
 import type { Locale } from "@/lib/config/public-content";
 import type { AvailabilitySlot } from "@/types/domain";
 
@@ -21,13 +20,13 @@ const copy = {
     name: "Nombre",
     phone: "Teléfono",
     notes: "Comentarios",
-    notesPlaceholder: "Preferencias, hora flexible, carrito, ocasión especial...",
+    notesPlaceholder:
+      "Una mesa en la terraza, hora flexible, ocasión especial...",
     privacy: "Acepto la política básica de privacidad",
     submit: "Enviar solicitud",
     loading: "Cargando horarios...",
     noSlots: "No hay horarios disponibles para esta fecha.",
-    errorSlots: "No se han podido cargar los horarios.",
-    phoneAlternative: "También puedes reservar por teléfono"
+    errorSlots: "No se han podido cargar los horarios."
   },
   en: {
     date: "Date",
@@ -36,15 +35,21 @@ const copy = {
     name: "Name",
     phone: "Phone",
     notes: "Comments",
-    notesPlaceholder: "Preferences, flexible time, stroller, special occasion...",
+    notesPlaceholder:
+      "A table on the terrace, flexible time, special occasion...",
     privacy: "I accept the basic privacy policy",
     submit: "Send request",
     loading: "Loading times...",
     noSlots: "No available times for this date.",
-    errorSlots: "Could not load available times.",
-    phoneAlternative: "You can also book by phone"
+    errorSlots: "Could not load available times."
   }
 };
+
+const FIELD_INPUT_CLASS =
+  "min-h-[3.25rem] w-full border-0 border-b border-harbor-900/25 bg-transparent px-0 text-lg text-harbor-900 outline-none transition placeholder:text-harbor-900/35 focus:border-terracotta-700";
+
+const FIELD_LABEL_CLASS =
+  "block font-serif text-xs uppercase tracking-[0.18em] text-harbor-900/65";
 
 export function LandingReservationForm({
   initialDate,
@@ -104,10 +109,7 @@ export function LandingReservationForm({
   );
 
   return (
-    <form
-      action={formAction}
-      className="border-y border-harbor-900/10 bg-[#fbfaf6] py-5 sm:border sm:px-5"
-    >
+    <form action={formAction} className="grid gap-7">
       <input name="locale" type="hidden" value={locale} />
       <input name="email" type="hidden" value="" />
       <input name="allergies" type="hidden" value="" />
@@ -115,25 +117,35 @@ export function LandingReservationForm({
       <input name="groupDetails" type="hidden" value="" />
 
       {!state.ok && state.message ? (
-        <div className="mb-4 flex gap-2 border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+        <div className="flex gap-2 border border-red-300 bg-red-50 p-3 text-sm text-red-700">
           <AlertCircle aria-hidden="true" size={18} />
           {state.message}
         </div>
       ) : null}
 
-      <div className="grid gap-3 md:grid-cols-[1fr_0.85fr_0.7fr_1.05fr_1fr]">
-        <Field
-          label={t.date}
-          name="date"
-          required
-          type="date"
-          value={date}
-          onChange={(event) => setDate(event.currentTarget.value)}
-        />
-        <label className="grid gap-2 text-sm font-semibold text-harbor-900">
-          {t.time}
+      <div className="grid gap-7 sm:grid-cols-2">
+        <div className="grid gap-2">
+          <label className={FIELD_LABEL_CLASS} htmlFor="reservation-date">
+            {t.date}
+          </label>
+          <input
+            id="reservation-date"
+            className={FIELD_INPUT_CLASS}
+            name="date"
+            required
+            type="date"
+            value={date}
+            onChange={(event) => setDate(event.currentTarget.value)}
+          />
+        </div>
+
+        <div className="grid gap-2">
+          <label className={FIELD_LABEL_CLASS} htmlFor="reservation-time">
+            {t.time}
+          </label>
           <select
-            className="min-h-[3.15rem] border border-harbor-900/15 bg-white px-3 text-base outline-none transition focus:border-terracotta-600 focus:ring-4 focus:ring-terracotta-600/10"
+            id="reservation-time"
+            className={`${FIELD_INPUT_CLASS} appearance-none`}
             disabled={loadingSlots || availableSlots.length === 0}
             name="time"
             required
@@ -144,80 +156,91 @@ export function LandingReservationForm({
               </option>
             ))}
           </select>
-        </label>
-        <Field
-          label={t.guests}
-          max={40}
-          min={1}
-          name="guests"
-          required
-          type="number"
-          value={guests}
-          onChange={(event) => setGuests(Number(event.currentTarget.value))}
-        />
-        <Field label={t.name} name="name" required />
-        <Field label={t.phone} name="phone" required type="tel" />
+        </div>
+
+        <div className="grid gap-2">
+          <label className={FIELD_LABEL_CLASS} htmlFor="reservation-guests">
+            {t.guests}
+          </label>
+          <input
+            id="reservation-guests"
+            className={FIELD_INPUT_CLASS}
+            max={40}
+            min={1}
+            name="guests"
+            required
+            type="number"
+            value={guests}
+            onChange={(event) => setGuests(Number(event.currentTarget.value))}
+          />
+        </div>
+
+        <div className="grid gap-2">
+          <label className={FIELD_LABEL_CLASS} htmlFor="reservation-name">
+            {t.name}
+          </label>
+          <input
+            id="reservation-name"
+            className={FIELD_INPUT_CLASS}
+            name="name"
+            required
+            type="text"
+          />
+        </div>
+
+        <div className="grid gap-2 sm:col-span-2">
+          <label className={FIELD_LABEL_CLASS} htmlFor="reservation-phone">
+            {t.phone}
+          </label>
+          <input
+            id="reservation-phone"
+            className={FIELD_INPUT_CLASS}
+            name="phone"
+            required
+            type="tel"
+          />
+        </div>
       </div>
 
-      {loadingSlots ? <p className="mt-2 text-sm text-harbor-900/65">{t.loading}</p> : null}
-      {slotsError ? <p className="mt-2 text-sm text-red-700">{t.errorSlots}</p> : null}
+      {loadingSlots ? (
+        <p className="text-sm italic text-harbor-900/65">{t.loading}</p>
+      ) : null}
+      {slotsError ? (
+        <p className="text-sm text-red-700">{t.errorSlots}</p>
+      ) : null}
       {!loadingSlots && !slotsError && availableSlots.length === 0 ? (
-        <p className="mt-2 text-sm text-harbor-900/65">{t.noSlots}</p>
+        <p className="text-sm italic text-harbor-900/65">{t.noSlots}</p>
       ) : null}
 
-      <label className="mt-3 grid gap-2 text-sm font-semibold text-harbor-900">
-        {t.notes}
+      <div className="grid gap-2">
+        <label className={FIELD_LABEL_CLASS} htmlFor="reservation-notes">
+          {t.notes}
+        </label>
         <textarea
-          className="min-h-20 border border-harbor-900/15 bg-white px-3 py-3 text-base outline-none transition placeholder:text-harbor-900/40 focus:border-terracotta-600 focus:ring-4 focus:ring-terracotta-600/10"
+          id="reservation-notes"
+          className="min-h-[6rem] w-full resize-y border-0 border-b border-harbor-900/25 bg-transparent px-0 py-3 text-base leading-relaxed text-harbor-900 outline-none transition placeholder:text-harbor-900/35 focus:border-terracotta-700"
           name="notes"
           placeholder={t.notesPlaceholder}
         />
-      </label>
-
-      <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <label className="flex items-start gap-3 text-sm font-semibold text-harbor-900">
-          <input
-            className="mt-0.5 h-5 w-5 border-harbor-900/20 text-terracotta-700"
-            name="privacyAccepted"
-            required
-            type="checkbox"
-          />
-          {t.privacy}
-        </label>
-
-        <button
-          className="inline-flex min-h-[3.15rem] items-center justify-center bg-terracotta-700 px-6 py-3 text-base font-bold text-white transition hover:bg-terracotta-600 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-          disabled={pending || loadingSlots || availableSlots.length === 0}
-          type="submit"
-        >
-          {t.submit}
-        </button>
       </div>
 
-      <a
-        className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-harbor-900 hover:text-terracotta-700"
-        href={RESTAURANT_CONFIG.phoneHref}
+      <label className="flex items-start gap-3 text-sm text-harbor-900/75">
+        <input
+          className="mt-1 h-4 w-4 border-harbor-900/30 text-terracotta-700"
+          name="privacyAccepted"
+          required
+          type="checkbox"
+        />
+        <span>{t.privacy}</span>
+      </label>
+
+      <button
+        className="inline-flex min-h-[3.5rem] items-center justify-center bg-terracotta-700 px-8 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-terracotta-600 disabled:cursor-not-allowed disabled:opacity-60"
+        disabled={pending || loadingSlots || availableSlots.length === 0}
+        type="submit"
       >
-        <Phone aria-hidden="true" size={16} />
-        {t.phoneAlternative}: {RESTAURANT_CONFIG.phone}
-      </a>
+        {t.submit}
+      </button>
     </form>
-  );
-}
-
-type FieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
-  name: string;
-};
-
-function Field({ label, className, ...props }: FieldProps) {
-  return (
-    <label className="grid gap-2 text-sm font-semibold text-harbor-900">
-      {label}
-      <input
-        className={`min-h-[3.15rem] border border-harbor-900/15 bg-white px-3 text-base outline-none transition placeholder:text-harbor-900/40 focus:border-terracotta-600 focus:ring-4 focus:ring-terracotta-600/10 ${className ?? ""}`}
-        {...props}
-      />
-    </label>
   );
 }

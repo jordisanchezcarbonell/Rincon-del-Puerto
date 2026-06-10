@@ -19,65 +19,83 @@ export function SiteFooter({ locale }: SiteFooterProps) {
       label: content.nav.reserve
     },
     {
-      href: RESTAURANT_CONFIG.googleMapsUrl,
-      label: content.nav.location,
-      external: true
+      href: `/?lang=${locale}#ubicacion`,
+      label: content.nav.location
     }
   ];
 
   return (
-    <footer className="border-t border-harbor-900/10 bg-harbor-900 text-white">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 text-sm sm:px-6 md:grid-cols-[1fr_auto_auto]">
+    <footer className="border-t border-harbor-900/15 bg-harbor-900 text-white">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 text-sm sm:px-6 md:grid-cols-[1.3fr_1fr_1fr_0.8fr]">
         <div>
-          <p className="font-serif text-2xl font-bold">{RESTAURANT_CONFIG.name}</p>
-          <p className="mt-2 max-w-sm leading-6 text-white/70">
+          <p className="font-serif text-3xl font-medium leading-tight">
+            Rincón
+            <br />
+            <span className="italic text-tide-300/90">del Puerto</span>
+          </p>
+          <p className="mt-4 max-w-xs leading-6 text-white/70">
             {content.footer.title}
           </p>
         </div>
 
-        <div className="grid gap-3 text-white/78">
+        <div className="grid gap-3 text-white/80">
+          <p className="font-serif text-xs uppercase tracking-[0.22em] text-white/55">
+            {content.nav.location}
+          </p>
           <a
             className="inline-flex items-start gap-2 hover:text-white"
             href={RESTAURANT_CONFIG.googleMapsUrl}
             rel="noreferrer"
             target="_blank"
           >
-            <MapPin aria-hidden="true" size={16} />
-            {RESTAURANT_CONFIG.address}
+            <MapPin aria-hidden="true" size={14} className="mt-1 shrink-0" />
+            <span className="leading-6">{RESTAURANT_CONFIG.address}</span>
           </a>
           <a
             className="inline-flex items-center gap-2 hover:text-white"
             href={RESTAURANT_CONFIG.phoneHref}
           >
-            <Phone aria-hidden="true" size={16} />
+            <Phone aria-hidden="true" size={14} />
             {RESTAURANT_CONFIG.phone}
           </a>
         </div>
 
-        <nav className="grid gap-2" aria-label={content.footer.quickLinks}>
-          <p className="font-bold text-white">{content.footer.quickLinks}</p>
-          {quickLinks.map((link) =>
-            link.external ? (
-              <a
-                className="text-white/70 hover:text-white"
-                href={link.href}
-                key={link.href}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {link.label}
-              </a>
-            ) : (
-              <Link
-                className="text-white/70 hover:text-white"
-                href={link.href}
-                key={link.href}
-              >
-                {link.label}
-              </Link>
-            )
-          )}
+        <div className="grid gap-3 text-white/80">
+          <p className="font-serif text-xs uppercase tracking-[0.22em] text-white/55">
+            {content.footer.hoursTitle}
+          </p>
+          <ul className="grid gap-1.5 leading-6">
+            {RESTAURANT_CONFIG.reservationHours.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </div>
+
+        <nav className="grid gap-3" aria-label={content.footer.quickLinks}>
+          <p className="font-serif text-xs uppercase tracking-[0.22em] text-white/55">
+            {content.footer.quickLinks}
+          </p>
+          {quickLinks.map((link) => (
+            <Link
+              className="text-white/80 hover:text-white"
+              href={link.href}
+              key={link.href}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
+      </div>
+
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-2 px-4 py-5 text-xs text-white/50 sm:flex-row sm:items-center sm:px-6">
+          <span>© {new Date().getFullYear()} {RESTAURANT_CONFIG.name}.</span>
+          <span className="font-serif italic">
+            {locale === "es"
+              ? "Puerto de Garrucha, Almería."
+              : "Garrucha harbour, Almería."}
+          </span>
+        </div>
       </div>
     </footer>
   );

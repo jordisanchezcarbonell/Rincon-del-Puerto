@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { CalendarCheck, MapPin, Phone, Utensils } from "lucide-react";
+import Link from "next/link";
 import { RESTAURANT_CONFIG } from "@/lib/config/site";
 import { PUBLIC_CONTENT, type Locale } from "@/lib/config/public-content";
-import { LinkButton } from "@/components/ui/link-button";
+import { getRestaurantStatus } from "@/lib/restaurant-hours";
 
 type HomeHeroProps = {
   locale: Locale;
@@ -10,78 +10,117 @@ type HomeHeroProps = {
 
 export function HomeHero({ locale }: HomeHeroProps) {
   const content = PUBLIC_CONTENT[locale];
+  const status = getRestaurantStatus();
 
   return (
-    <section className="relative overflow-hidden bg-harbor-900 text-white">
-      <Image
-        priority
-        alt={RESTAURANT_CONFIG.name}
-        className="absolute inset-0 h-full w-full object-cover opacity-82"
-        fill
-        sizes="100vw"
-        src="/hero-restaurant.png"
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,49,47,0.9)_0%,rgba(16,49,47,0.64)_38%,rgba(16,49,47,0.18)_100%)]" />
-
-      <div className="relative mx-auto flex min-h-[520px] max-w-7xl items-center px-4 py-12 sm:px-6 md:min-h-[650px] md:py-16">
-        <div className="max-w-2xl border-l border-white/30 pl-5 sm:pl-7">
-          <p className="mb-5 text-sm font-bold uppercase tracking-[0.22em] text-white/76">
-            {content.hero.eyebrow}
+    <section className="relative overflow-hidden bg-paper">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:py-20 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:py-24">
+        <div className="order-2 flex flex-col justify-center lg:order-1">
+          <p className="font-serif text-sm italic text-harbor-600">
+            — Desde 1998, frente a la lonja
           </p>
-          <h1 className="font-serif text-5xl font-bold leading-none tracking-tight sm:text-6xl md:text-7xl">
-            {content.hero.title}
+
+          <h1 className="mt-4 font-serif text-5xl font-medium leading-[1.02] tracking-tight text-harbor-900 sm:text-6xl lg:text-[5.25rem]">
+            Rincón
+            <br />
+            <span className="italic text-tide-700">del Puerto</span>
           </h1>
-          <p className="mt-5 max-w-xl text-xl font-semibold leading-8 text-white">
-            {content.hero.subtitle}
-          </p>
-          <p className="mt-4 max-w-lg text-base leading-7 text-white/80 sm:text-lg">
-            {content.hero.description}
+
+          <p className="mt-7 max-w-md text-lg leading-relaxed text-harbor-900/80 sm:text-xl">
+            {content.hero.tagline}
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <LinkButton
-              analyticsEvent="reservation_button_click"
-              className="gap-2 rounded-full bg-terracotta-700 hover:bg-terracotta-600"
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link
+              className="inline-flex min-h-[3.25rem] items-center justify-center bg-terracotta-700 px-7 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-terracotta-600"
+              data-analytics-event="reservation_button_click"
               href="#reservar"
             >
-              <CalendarCheck aria-hidden="true" size={18} />
               {content.hero.reserve}
-            </LinkButton>
-            <LinkButton
-              analyticsEvent="menu_button_click"
-              className="gap-2 rounded-full border-white/30 bg-white/90"
-              href="#carta"
-              variant="secondary"
+            </Link>
+            <a
+              className="inline-flex min-h-[3.25rem] items-center justify-center border-b-2 border-harbor-900 px-2 text-sm font-semibold uppercase tracking-[0.14em] text-harbor-900 transition hover:border-terracotta-700 hover:text-terracotta-700"
+              data-analytics-event="menu_button_click"
+              href={RESTAURANT_CONFIG.menuUrl}
+              rel="noreferrer"
+              target="_blank"
             >
-              <Utensils aria-hidden="true" size={18} />
               {content.hero.menu}
-            </LinkButton>
+            </a>
           </div>
 
-          <dl className="mt-9 grid gap-3 text-sm text-white/78 sm:grid-cols-3">
-            <div>
-              <dt className="flex items-center gap-2 font-bold text-white">
-                <Utensils aria-hidden="true" size={16} />
-                Cocina
-              </dt>
-              <dd className="mt-1">Mediterránea y de puerto</dd>
+          <dl className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-harbor-900/70">
+            <div className="flex items-center gap-2">
+              <span aria-hidden="true" className="font-serif text-base">◆</span>
+              <span>{content.topBar.place}</span>
             </div>
-            <div>
-              <dt className="flex items-center gap-2 font-bold text-white">
-                <MapPin aria-hidden="true" size={16} />
-                Zona
-              </dt>
-              <dd className="mt-1">Puerto de Garrucha</dd>
+            <span aria-hidden="true" className="hidden h-3 w-px bg-harbor-900/20 sm:block" />
+            <div className="flex items-center gap-2">
+              <span
+                aria-hidden="true"
+                className={
+                  status.openNow
+                    ? "h-1.5 w-1.5 rounded-full bg-terracotta-600"
+                    : "h-1.5 w-1.5 rounded-full bg-harbor-900/30"
+                }
+              />
+              <span>{status.label[locale]}</span>
             </div>
-            <div>
-              <dt className="flex items-center gap-2 font-bold text-white">
-                <Phone aria-hidden="true" size={16} />
-                Teléfono
-              </dt>
-              <dd className="mt-1">{RESTAURANT_CONFIG.phone}</dd>
-            </div>
+            <span aria-hidden="true" className="hidden h-3 w-px bg-harbor-900/20 sm:block" />
+            <a
+              className="font-medium text-harbor-900 underline-offset-4 hover:underline"
+              href={RESTAURANT_CONFIG.phoneHref}
+            >
+              {RESTAURANT_CONFIG.phone}
+            </a>
           </dl>
         </div>
+
+        <div className="order-1 lg:order-2">
+          <div className="relative grid grid-cols-5 grid-rows-6 gap-3 sm:gap-4">
+            <div className="relative col-span-5 row-span-4 overflow-hidden border border-harbor-900/15 bg-harbor-900/5 lg:col-span-3 lg:row-span-6">
+              <Image
+                priority
+                alt={RESTAURANT_CONFIG.name}
+                className="h-full w-full object-cover"
+                height={780}
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                src="/hero-collage-1.jpg"
+                width={560}
+              />
+            </div>
+            <div className="relative col-span-3 row-span-2 overflow-hidden border border-harbor-900/15 bg-harbor-900/5 lg:col-span-2 lg:row-span-3">
+              <Image
+                alt=""
+                className="h-full w-full object-cover"
+                height={360}
+                sizes="(max-width: 1024px) 60vw, 24vw"
+                src="/hero-collage-2.jpg"
+                width={400}
+              />
+            </div>
+            <div className="relative col-span-2 row-span-2 overflow-hidden border border-harbor-900/15 bg-harbor-900/5 lg:col-span-2 lg:row-span-3">
+              <Image
+                alt=""
+                className="h-full w-full object-cover"
+                height={360}
+                sizes="(max-width: 1024px) 40vw, 24vw"
+                src="/hero-collage-3.jpg"
+                width={400}
+              />
+            </div>
+          </div>
+
+          <p className="mt-3 text-xs italic text-harbor-900/55">
+            {locale === "es"
+              ? "Terraza junto al puerto · arroces al centro · pescado de lonja."
+              : "Terrace by the harbour · rice in the centre · fish from the market."}
+          </p>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <hr className="border-harbor-900/10" />
       </div>
     </section>
   );

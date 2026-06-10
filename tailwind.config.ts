@@ -40,7 +40,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "Arial", "sans-serif"],
-        serif: ["Georgia", "serif"]
+        serif: ["var(--font-serif)", "Georgia", "serif"]
       },
       boxShadow: {
         soft: "0 18px 50px rgba(23, 59, 58, 0.14)"
