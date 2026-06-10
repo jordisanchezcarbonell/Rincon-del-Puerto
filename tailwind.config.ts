@@ -9,41 +9,41 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#f6f1e8",
+        paper: "#f7f1e7",
         pearl: "#fbfaf6",
         harbor: {
-          50: "#f3f8f8",
-          100: "#d7e9e8",
-          300: "#7eb8b5",
-          600: "#2f6f6b",
-          900: "#173b3a"
+          50: "#eef2f8",
+          100: "#cfdaec",
+          300: "#5a7ba8",
+          600: "#b88a45",
+          900: "#0b2547"
         },
         tide: {
-          50: "#f7fbfb",
-          100: "#e8f2f1",
-          300: "#9bc6c2",
-          700: "#255a57"
+          50: "#f4f7fc",
+          100: "#dde6f3",
+          300: "#d9b97a",
+          700: "#14385f"
         },
         sand: {
           50: "#fbf6ed",
           100: "#f3e5cf",
-          300: "#d7b37c",
+          300: "#d9b97a",
           600: "#9b6a2f"
         },
         terracotta: {
-          50: "#fff4ef",
-          100: "#ffe1d4",
-          300: "#e79a79",
-          600: "#c75f3f",
-          700: "#aa4a2f"
+          50: "#fbf3e5",
+          100: "#f3e5cf",
+          300: "#d9b97a",
+          600: "#9b6f33",
+          700: "#b88a45"
         }
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "Arial", "sans-serif"],
-        serif: ["var(--font-serif)", "Georgia", "serif"]
+        sans: ["var(--font-sans)", "Inter", "Arial", "sans-serif"],
+        serif: ["var(--font-serif)", '"Cormorant Garamond"', "Georgia", "serif"]
       },
       boxShadow: {
-        soft: "0 18px 50px rgba(23, 59, 58, 0.14)"
+        soft: "0 14px 38px rgba(11, 37, 71, 0.18)"
       }
     }
   },

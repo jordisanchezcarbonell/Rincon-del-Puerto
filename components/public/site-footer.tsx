@@ -28,10 +28,10 @@ export function SiteFooter({ locale }: SiteFooterProps) {
     <footer className="border-t border-harbor-900/15 bg-harbor-900 text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 text-sm sm:px-6 md:grid-cols-[1.3fr_1fr_1fr_0.8fr]">
         <div>
-          <p className="font-serif text-3xl font-medium leading-tight">
-            Rincón
+          <p className="font-serif text-3xl font-bold uppercase leading-tight tracking-[0.02em]">
+            Rincón del
             <br />
-            <span className="italic text-tide-300/90">del Puerto</span>
+            <span className="text-terracotta-300">Puerto</span>
           </p>
           <p className="mt-4 max-w-xs leading-6 text-white/70">
             {content.footer.title}

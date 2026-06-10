@@ -46,10 +46,10 @@ const copy = {
 };
 
 const FIELD_INPUT_CLASS =
-  "min-h-[3.25rem] w-full border-0 border-b border-harbor-900/25 bg-transparent px-0 text-lg text-harbor-900 outline-none transition placeholder:text-harbor-900/35 focus:border-terracotta-700";
+  "min-h-[3.25rem] w-full border-0 border-b border-white/25 bg-transparent px-0 text-lg text-white outline-none transition [color-scheme:dark] placeholder:text-white/45 focus:border-terracotta-300";
 
 const FIELD_LABEL_CLASS =
-  "block font-serif text-xs uppercase tracking-[0.18em] text-harbor-900/65";
+  "block text-xs font-semibold uppercase tracking-[0.22em] text-white/70";
 
 export function LandingReservationForm({
   initialDate,
@@ -203,13 +203,13 @@ export function LandingReservationForm({
       </div>
 
       {loadingSlots ? (
-        <p className="text-sm italic text-harbor-900/65">{t.loading}</p>
+        <p className="text-sm italic text-white/70">{t.loading}</p>
       ) : null}
       {slotsError ? (
-        <p className="text-sm text-red-700">{t.errorSlots}</p>
+        <p className="text-sm text-terracotta-300">{t.errorSlots}</p>
       ) : null}
       {!loadingSlots && !slotsError && availableSlots.length === 0 ? (
-        <p className="text-sm italic text-harbor-900/65">{t.noSlots}</p>
+        <p className="text-sm italic text-white/70">{t.noSlots}</p>
       ) : null}
 
       <div className="grid gap-2">
@@ -218,15 +218,15 @@ export function LandingReservationForm({
         </label>
         <textarea
           id="reservation-notes"
-          className="min-h-[6rem] w-full resize-y border-0 border-b border-harbor-900/25 bg-transparent px-0 py-3 text-base leading-relaxed text-harbor-900 outline-none transition placeholder:text-harbor-900/35 focus:border-terracotta-700"
+          className="min-h-[6rem] w-full resize-y border-0 border-b border-white/25 bg-transparent px-0 py-3 text-base leading-relaxed text-white outline-none transition placeholder:text-white/45 focus:border-terracotta-300"
           name="notes"
           placeholder={t.notesPlaceholder}
         />
       </div>
 
-      <label className="flex items-start gap-3 text-sm text-harbor-900/75">
+      <label className="flex items-start gap-3 text-sm text-white/80">
         <input
-          className="mt-1 h-4 w-4 border-harbor-900/30 text-terracotta-700"
+          className="mt-1 h-4 w-4 accent-terracotta-700"
           name="privacyAccepted"
           required
           type="checkbox"
@@ -235,11 +235,11 @@ export function LandingReservationForm({
       </label>
 
       <button
-        className="inline-flex min-h-[3.5rem] items-center justify-center bg-terracotta-700 px-8 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-terracotta-600 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex min-h-[3.5rem] items-center justify-center border border-terracotta-700 bg-paper px-8 text-sm font-semibold uppercase tracking-[0.18em] text-harbor-900 shadow-soft transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
         disabled={pending || loadingSlots || availableSlots.length === 0}
         type="submit"
       >
-        {t.submit}
+        ⚓ {t.submit}
       </button>
     </form>
   );

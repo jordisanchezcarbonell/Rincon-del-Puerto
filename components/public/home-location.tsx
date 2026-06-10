@@ -19,10 +19,10 @@ export function HomeLocation({ locale }: HomeLocationProps) {
     >
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-16">
         <div>
-          <p className="font-serif text-sm italic text-harbor-600">
-            — {t.kicker}
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-terracotta-700">
+            ◇ {t.kicker}
           </p>
-          <h2 className="mt-2 font-serif text-4xl font-medium leading-tight tracking-tight text-harbor-900 sm:text-5xl">
+          <h2 className="mt-3 font-serif text-4xl font-bold uppercase leading-tight tracking-[0.01em] text-harbor-900 sm:text-5xl">
             {t.title}
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-harbor-900/75">

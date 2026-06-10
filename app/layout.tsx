@@ -1,18 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Geist } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { RESTAURANT_CONFIG, SITE_URL } from "@/lib/config/site";
 
-const geist = Geist({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-geist-sans"
+  variable: "--font-sans",
+  display: "swap"
 });
 
-const fraunces = Fraunces({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
   variable: "--font-serif",
-  display: "swap",
-  axes: ["SOFT", "opsz"]
+  display: "swap"
 });
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/hero-restaurant.png",
+        url: "/brand/hero.jpg",
         width: 1200,
         height: 800,
         alt: RESTAURANT_CONFIG.name
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#173b3a"
+  themeColor: "#0b2547"
 };
 
 export default function RootLayout({
@@ -49,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${geist.variable} ${fraunces.variable}`}>
+    <html lang="es" className={`${inter.variable} ${cormorant.variable}`}>
       <body className="font-sans antialiased">{children}</body>
     </html>
   );

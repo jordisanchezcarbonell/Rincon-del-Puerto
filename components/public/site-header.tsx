@@ -21,7 +21,7 @@ export function SiteHeader({ locale, currentPath }: SiteHeaderProps) {
   const statusLabel = status.label[locale];
 
   return (
-    <header className="sticky top-0 z-30 border-b border-harbor-900/10 bg-paper/95 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 border-b border-terracotta-700/25 bg-paper/95 backdrop-blur-xl">
       <div className="border-b border-harbor-900/10 bg-harbor-900 text-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 text-[0.72rem] uppercase tracking-[0.18em] sm:px-6">
           <span className="hidden sm:inline">{content.topBar.place}</span>
@@ -85,7 +85,7 @@ export function SiteHeader({ locale, currentPath }: SiteHeaderProps) {
         </nav>
 
         <Link
-          className="inline-flex min-h-11 items-center justify-center bg-terracotta-700 px-5 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-terracotta-600 sm:px-6"
+          className="inline-flex min-h-11 items-center justify-center border border-terracotta-700 bg-harbor-900 px-5 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-soft transition hover:bg-tide-700 sm:px-6"
           data-analytics-event="reservation_button_click"
           href={reserveHref}
         >

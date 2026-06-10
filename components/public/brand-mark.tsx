@@ -1,4 +1,4 @@
-import { Anchor } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type BrandMarkProps = {
@@ -11,31 +11,38 @@ export function BrandMark({ compact = false, inverted = false }: BrandMarkProps)
     <span className="flex min-w-0 items-center gap-3">
       <span
         className={cn(
-          "grid h-11 w-11 shrink-0 place-items-center rounded-lg border",
-          inverted
-            ? "border-white/20 bg-white/10 text-white"
-            : "border-harbor-900/10 bg-harbor-900 text-white"
+          "relative shrink-0 overflow-hidden rounded-full border",
+          compact ? "h-12 w-12" : "h-14 w-14",
+          inverted ? "border-white/30 bg-white/10" : "border-terracotta-700/40 bg-paper"
         )}
       >
-        <Anchor aria-hidden="true" size={20} strokeWidth={2.2} />
+        <Image
+          alt=""
+          fill
+          priority
+          sizes="56px"
+          src="/brand/logo.png"
+          className="object-cover"
+        />
       </span>
-      <span className="min-w-0">
+      <span className="min-w-0 leading-none">
         <span
           className={cn(
-            "block truncate font-bold leading-tight tracking-wide",
-            compact ? "text-sm" : "text-base",
+            "block truncate font-serif uppercase tracking-[0.06em]",
+            compact ? "text-lg font-bold" : "text-xl font-bold",
             inverted ? "text-white" : "text-harbor-900"
           )}
         >
-          Rincón del Puerto
+          Rincón del
         </span>
         <span
           className={cn(
-            "hidden text-xs font-semibold uppercase tracking-[0.16em] sm:block",
-            inverted ? "text-white/65" : "text-harbor-600"
+            "block truncate font-serif uppercase tracking-[0.06em]",
+            compact ? "text-lg font-bold" : "text-xl font-bold",
+            inverted ? "text-white" : "text-harbor-900"
           )}
         >
-          Puerto de Garrucha
+          Puerto
         </span>
       </span>
     </span>

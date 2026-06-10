@@ -16,34 +16,39 @@ export function HomeHero({ locale }: HomeHeroProps) {
     <section className="relative overflow-hidden bg-paper">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:py-20 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:py-24">
         <div className="order-2 flex flex-col justify-center lg:order-1">
-          <p className="font-serif text-sm italic text-harbor-600">
-            — Desde 1998, frente a la lonja
+          <div className="flex items-center gap-3 text-terracotta-700">
+            <span aria-hidden="true" className="h-px w-16 bg-terracotta-700/70" />
+            <span aria-hidden="true" className="font-serif text-base">◇</span>
+            <span aria-hidden="true" className="h-px w-16 bg-terracotta-700/70" />
+          </div>
+          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.22em] text-terracotta-700">
+            Desde 1998 · frente a la lonja
           </p>
 
-          <h1 className="mt-4 font-serif text-5xl font-medium leading-[1.02] tracking-tight text-harbor-900 sm:text-6xl lg:text-[5.25rem]">
-            Rincón
+          <h1 className="mt-5 font-serif text-6xl font-bold uppercase leading-[0.86] tracking-[0.01em] text-harbor-900 sm:text-7xl lg:text-[6.25rem]">
+            Rincón del
             <br />
-            <span className="italic text-tide-700">del Puerto</span>
+            Puerto
           </h1>
 
-          <p className="mt-7 max-w-md text-lg leading-relaxed text-harbor-900/80 sm:text-xl">
+          <p className="mt-7 max-w-md font-serif text-xl italic leading-snug text-harbor-900/85 sm:text-2xl">
             {content.hero.tagline}
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
-              className="inline-flex min-h-[3.25rem] items-center justify-center bg-terracotta-700 px-7 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-terracotta-600"
+              className="inline-flex min-h-[3.5rem] items-center justify-center border border-terracotta-700 bg-harbor-900 px-7 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-soft transition hover:bg-tide-700"
               data-analytics-event="reservation_button_click"
               href="#reservar"
             >
-              {content.hero.reserve}
+              ⚓ {content.hero.reserve}
             </Link>
             <Link
-              className="inline-flex min-h-[3.25rem] items-center justify-center border-b-2 border-harbor-900 px-2 text-sm font-semibold uppercase tracking-[0.14em] text-harbor-900 transition hover:border-terracotta-700 hover:text-terracotta-700"
+              className="inline-flex min-h-[3.5rem] items-center justify-center border border-terracotta-700 bg-white/70 px-7 text-sm font-semibold uppercase tracking-[0.14em] text-harbor-900 backdrop-blur transition hover:bg-white"
               data-analytics-event="menu_button_click"
               href={`/carta?lang=${locale}`}
             >
-              {content.hero.menu}
+              ☰ {content.hero.menu}
             </Link>
           </div>
 

@@ -4,8 +4,12 @@
 
 :root {
   color-scheme: light;
-  --background: #f6f1e8;
-  --foreground: #173b3a;
+  --background: #f7f1e7;
+  --foreground: #17253a;
+  --navy: #0b2547;
+  --navy-2: #14385f;
+  --gold: #b88a45;
+  --ivory: #f7f1e7;
 }
 
 * {
@@ -29,6 +33,6 @@ a {
 }
 
 ::selection {
-  background: #2f6f6b;
+  background: var(--navy);
   color: white;
 }

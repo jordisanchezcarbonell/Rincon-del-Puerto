@@ -14,10 +14,10 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-xl">
-            <p className="font-serif text-sm italic text-harbor-600">
-              — {t.kicker}
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-terracotta-700">
+              ◇ {t.kicker}
             </p>
-            <h2 className="mt-2 font-serif text-4xl font-medium leading-tight tracking-tight text-harbor-900 sm:text-5xl">
+            <h2 className="mt-3 font-serif text-4xl font-bold uppercase leading-tight tracking-[0.01em] text-harbor-900 sm:text-5xl">
               {t.title}
             </h2>
             <p className="mt-4 text-base leading-7 text-harbor-900/70">
@@ -26,7 +26,7 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
           </div>
 
           <Link
-            className="group inline-flex items-center gap-2 self-start border-b-2 border-harbor-900 pb-1 text-sm font-semibold uppercase tracking-[0.14em] text-harbor-900 transition hover:border-terracotta-700 hover:text-terracotta-700 md:self-auto"
+            className="group inline-flex items-center gap-2 self-start border border-terracotta-700 bg-harbor-900 px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-soft transition hover:bg-tide-700 md:self-auto"
             data-analytics-event="menu_button_click"
             href={`/carta?lang=${locale}`}
           >
@@ -35,11 +35,11 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
           </Link>
         </div>
 
-        <div className="mt-12 grid gap-px bg-harbor-900/15 md:grid-cols-2">
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
           {t.groups.map((group) => (
             <article
               key={group.title}
-              className="relative bg-pearl p-6 sm:p-8"
+              className="relative border border-terracotta-700/30 bg-pearl p-6 sm:p-8"
             >
               <span
                 aria-hidden="true"
@@ -55,10 +55,10 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
                 <span className="h-px flex-1 bg-harbor-900/20" />
               </div>
 
-              <h3 className="mt-3 font-serif text-3xl font-medium text-harbor-900">
+              <h3 className="mt-3 font-serif text-3xl font-bold uppercase tracking-[0.02em] text-harbor-900">
                 {group.title}
               </h3>
-              <p className="mt-1 font-serif text-sm italic text-harbor-600">
+              <p className="mt-1 font-serif text-base italic text-terracotta-700">
                 {group.subtitle}
               </p>
 
