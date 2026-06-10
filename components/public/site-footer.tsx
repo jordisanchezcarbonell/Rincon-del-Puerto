@@ -11,7 +11,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
   const content = PUBLIC_CONTENT[locale];
   const quickLinks = [
     {
-      href: `/?lang=${locale}#carta`,
+      href: `/carta?lang=${locale}`,
       label: content.nav.menu
     },
     {

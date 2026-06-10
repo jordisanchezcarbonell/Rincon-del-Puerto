@@ -12,7 +12,7 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ locale, currentPath }: SiteHeaderProps) {
   const content = PUBLIC_CONTENT[locale];
-  const menuHref = currentPath === "/" ? "#carta" : `/?lang=${locale}#carta`;
+  const menuHref = `/carta?lang=${locale}`;
   const reserveHref =
     currentPath === "/" ? "#reservar" : `/?lang=${locale}#reservar`;
   const locationHref =

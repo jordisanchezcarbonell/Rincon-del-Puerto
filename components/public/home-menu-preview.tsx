@@ -1,5 +1,5 @@
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { RESTAURANT_CONFIG } from "@/lib/config/site";
 import { PUBLIC_CONTENT, type Locale } from "@/lib/config/public-content";
 
 type MenuPreviewProps = {
@@ -25,16 +25,14 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
             </p>
           </div>
 
-          <a
+          <Link
             className="group inline-flex items-center gap-2 self-start border-b-2 border-harbor-900 pb-1 text-sm font-semibold uppercase tracking-[0.14em] text-harbor-900 transition hover:border-terracotta-700 hover:text-terracotta-700 md:self-auto"
             data-analytics-event="menu_button_click"
-            href={RESTAURANT_CONFIG.menuUrl}
-            rel="noreferrer"
-            target="_blank"
+            href={`/carta?lang=${locale}`}
           >
             {t.cta}
             <ArrowUpRight aria-hidden="true" size={16} />
-          </a>
+          </Link>
         </div>
 
         <div className="mt-12 grid gap-px bg-harbor-900/15 md:grid-cols-2">

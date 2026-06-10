@@ -38,15 +38,13 @@ export function HomeHero({ locale }: HomeHeroProps) {
             >
               {content.hero.reserve}
             </Link>
-            <a
+            <Link
               className="inline-flex min-h-[3.25rem] items-center justify-center border-b-2 border-harbor-900 px-2 text-sm font-semibold uppercase tracking-[0.14em] text-harbor-900 transition hover:border-terracotta-700 hover:text-terracotta-700"
               data-analytics-event="menu_button_click"
-              href={RESTAURANT_CONFIG.menuUrl}
-              rel="noreferrer"
-              target="_blank"
+              href={`/carta?lang=${locale}`}
             >
               {content.hero.menu}
-            </a>
+            </Link>
           </div>
 
           <dl className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-harbor-900/70">
