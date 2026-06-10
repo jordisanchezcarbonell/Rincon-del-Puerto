@@ -65,16 +65,16 @@ export function HomeMenuPreview({ locale }: MenuPreviewProps) {
               <ul className="mt-6 grid gap-3">
                 {group.items.map((item) => (
                   <li
-                    key={item}
+                    key={item.name}
                     className="flex items-baseline gap-3 text-[15px] text-harbor-900"
                   >
-                    <span>{item}</span>
+                    <span>{item.name}</span>
                     <span
                       aria-hidden="true"
                       className="h-px flex-1 translate-y-[-3px] border-b border-dotted border-harbor-900/25"
                     />
-                    <span className="font-serif text-xs italic text-harbor-900/50">
-                      {t.priceNote}
+                    <span className="shrink-0 font-serif text-xs italic text-harbor-900/60">
+                      {item.price}
                     </span>
                   </li>
                 ))}

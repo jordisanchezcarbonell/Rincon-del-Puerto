@@ -44,10 +44,10 @@ export const PUBLIC_CONTENT = {
           title: "Arroces",
           subtitle: "A fuego lento, al centro de la mesa.",
           items: [
-            "Arroz caldoso de marisco",
-            "Fideuá",
-            "Arroz negro",
-            "Arroz con bogavante"
+            { name: "Arroz caldoso", price: "26 € · 2 pers." },
+            { name: "Arroz caldoso con bogavante", price: "56 € · 2 pers." },
+            { name: "Paella de pescado y marisco", price: "26 € · 2 pers." },
+            { name: "Arroz negro", price: "26 € · 2 pers." }
           ]
         },
         {
@@ -55,32 +55,32 @@ export const PUBLIC_CONTENT = {
           title: "Pescados",
           subtitle: "Lo que ha entrado esta mañana en la lonja.",
           items: [
-            "Pescado fresco del día",
-            "Lubina a la sal",
-            "Pulpo a la brasa",
-            "Fritura de pescado"
+            { name: "Lubina o dorada a la sal", price: "40 € · 2 pers." },
+            { name: "Fritura de pescados", price: "45 € · 2 pers." },
+            { name: "Lubina a la plancha", price: "20 € · 1/2 kg" },
+            { name: "Parrillada de pescado", price: "45 € · 2 pers." }
           ]
         },
         {
           numeral: "III",
-          title: "Tapas",
-          subtitle: "Para empezar mientras se decide.",
+          title: "Mariscos",
+          subtitle: "Producto fresco del puerto.",
           items: [
-            "Gambas al ajillo",
-            "Calamares a la andaluza",
-            "Boquerones en vinagre",
-            "Mejillones al vapor"
+            { name: "Gamba roja de Garrucha", price: "24 € · 200 g" },
+            { name: "Gambón de Garrucha", price: "26 € · 200 g" },
+            { name: "Gambas al ajillo", price: "24 €" },
+            { name: "Bogavante", price: "80 € · kg" }
           ]
         },
         {
           numeral: "IV",
-          title: "Postres",
-          subtitle: "De cuchara, sin prisa.",
+          title: "Entrantes",
+          subtitle: "Para empezar mientras se decide.",
           items: [
-            "Tarta de la abuela",
-            "Flan casero",
-            "Helado artesano",
-            "Sorbete de limón"
+            { name: "Pulpo a la gallega", price: "15 €" },
+            { name: "Jamón ibérico", price: "20 €" },
+            { name: "Cocktail de gambas", price: "12 €" },
+            { name: "Mojama de almadraba", price: "12 €" }
           ]
         }
       ]
@@ -167,10 +167,10 @@ export const PUBLIC_CONTENT = {
           title: "Rice dishes",
           subtitle: "Slow-cooked, served in the middle.",
           items: [
-            "Seafood broth rice",
-            "Fideuá",
-            "Black rice",
-            "Rice with lobster"
+            { name: "Seafood broth rice", price: "€26 · serves 2" },
+            { name: "Lobster broth rice", price: "€56 · serves 2" },
+            { name: "Seafood paella", price: "€26 · serves 2" },
+            { name: "Black rice", price: "€26 · serves 2" }
           ]
         },
         {
@@ -178,32 +178,32 @@ export const PUBLIC_CONTENT = {
           title: "Fish",
           subtitle: "Whatever came in this morning from the market.",
           items: [
-            "Catch of the day",
-            "Salt-baked sea bass",
-            "Grilled octopus",
-            "Mixed fried fish"
+            { name: "Salt-baked sea bass or sea bream", price: "€40 · serves 2" },
+            { name: "Mixed fried fish", price: "€45 · serves 2" },
+            { name: "Grilled sea bass", price: "€20 · ½ kg" },
+            { name: "Grilled fish platter", price: "€45 · serves 2" }
           ]
         },
         {
           numeral: "III",
-          title: "Tapas",
-          subtitle: "To start while you decide.",
+          title: "Shellfish",
+          subtitle: "Fresh from the harbour.",
           items: [
-            "Garlic prawns",
-            "Andalusian fried squid",
-            "Anchovies in vinegar",
-            "Steamed mussels"
+            { name: "Garrucha red prawn", price: "€24 · 200 g" },
+            { name: "Garrucha king prawn", price: "€26 · 200 g" },
+            { name: "Garlic prawns", price: "€24" },
+            { name: "Lobster", price: "€80 · kg" }
           ]
         },
         {
           numeral: "IV",
-          title: "Desserts",
-          subtitle: "Slow spoonfuls.",
+          title: "Starters",
+          subtitle: "To start while you decide.",
           items: [
-            "Grandmother's cake",
-            "Homemade flan",
-            "Artisan ice cream",
-            "Lemon sorbet"
+            { name: "Galician-style octopus", price: "€15" },
+            { name: "Iberian ham", price: "€20" },
+            { name: "Prawn cocktail", price: "€12" },
+            { name: "Tuna mojama", price: "€12" }
           ]
         }
       ]
