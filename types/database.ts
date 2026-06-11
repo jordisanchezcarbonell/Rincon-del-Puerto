@@ -98,6 +98,7 @@ export type Database = {
           is_group_request: boolean;
           group_details: string | null;
           privacy_accepted_at: string;
+          reminder_sent: boolean;
         };
         Insert: {
           id?: string;
@@ -118,6 +119,7 @@ export type Database = {
           is_group_request?: boolean;
           group_details?: string | null;
           privacy_accepted_at?: string;
+          reminder_sent?: boolean;
           created_at?: string;
           updated_at?: string;
         };
@@ -131,6 +133,7 @@ export type Database = {
           internal_notes?: string | null;
           is_group_request?: boolean;
           group_details?: string | null;
+          reminder_sent?: boolean;
           updated_at?: string;
         };
         Relationships: [];

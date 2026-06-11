@@ -45,8 +45,12 @@ create table if not exists public.reservations (
   internal_notes text,
   is_group_request boolean not null default false,
   group_details text,
-  privacy_accepted_at timestamptz not null default now()
+  privacy_accepted_at timestamptz not null default now(),
+  reminder_sent boolean not null default false
 );
+
+alter table public.reservations
+  add column if not exists reminder_sent boolean not null default false;
 
 create table if not exists public.blocked_slots (
   id uuid primary key default gen_random_uuid(),

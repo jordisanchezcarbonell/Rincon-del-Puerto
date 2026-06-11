@@ -1,9 +1,5 @@
-import {
-  acceptReservationAction,
-  cancelReservationAction,
-  rejectReservationAction,
-  updateInternalNotesAction
-} from "@/app/admin/actions";
+import { updateInternalNotesAction } from "@/app/admin/actions";
+import { ReservationActions } from "@/components/admin/reservation-actions";
 import type { Database } from "@/types/database";
 import type { ReservationStatus } from "@/types/domain";
 
@@ -101,17 +97,7 @@ export function ReservationsPanel({
                 </p>
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
-                <ActionButton action={acceptReservationAction} id={reservation.id}>
-                  Aceptar
-                </ActionButton>
-                <ActionButton action={rejectReservationAction} id={reservation.id}>
-                  Rechazar
-                </ActionButton>
-                <ActionButton action={cancelReservationAction} id={reservation.id}>
-                  Cancelar
-                </ActionButton>
-              </div>
+              <ReservationActions reservationId={reservation.id} />
             </div>
 
             <details className="mt-4 rounded-lg bg-[#fbfaf7] p-4">
@@ -147,23 +133,6 @@ export function ReservationsPanel({
         ))}
       </div>
     </section>
-  );
-}
-
-type ActionButtonProps = {
-  action: (formData: FormData) => Promise<void>;
-  id: string;
-  children: string;
-};
-
-function ActionButton({ action, id, children }: ActionButtonProps) {
-  return (
-    <form action={action}>
-      <input name="reservationId" type="hidden" value={id} />
-      <button className="min-h-10 w-full rounded-lg border border-harbor-900/15 bg-white px-3 text-xs font-bold text-harbor-900 hover:bg-harbor-50">
-        {children}
-      </button>
-    </form>
   );
 }
 

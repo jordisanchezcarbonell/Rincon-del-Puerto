@@ -18,16 +18,35 @@ export async function logoutAction() {
   redirect("/admin/login");
 }
 
-export async function acceptReservationAction(formData: FormData) {
-  await updateReservationStatus(formData, "accepted");
+export type ReservationActionResult = {
+  status: "idle" | "success" | "error";
+  message: string;
+};
+
+export const initialReservationActionState: ReservationActionResult = {
+  status: "idle",
+  message: ""
+};
+
+export async function acceptReservationAction(
+  _prevState: ReservationActionResult,
+  formData: FormData
+): Promise<ReservationActionResult> {
+  return updateReservationStatus(formData, "accepted");
 }
 
-export async function rejectReservationAction(formData: FormData) {
-  await updateReservationStatus(formData, "rejected");
+export async function rejectReservationAction(
+  _prevState: ReservationActionResult,
+  formData: FormData
+): Promise<ReservationActionResult> {
+  return updateReservationStatus(formData, "rejected");
 }
 
-export async function cancelReservationAction(formData: FormData) {
-  await updateReservationStatus(formData, "cancelled");
+export async function cancelReservationAction(
+  _prevState: ReservationActionResult,
+  formData: FormData
+): Promise<ReservationActionResult> {
+  return updateReservationStatus(formData, "cancelled");
 }
 
 export async function updateInternalNotesAction(formData: FormData) {
@@ -93,15 +112,22 @@ export async function deleteBlockedSlotAction(formData: FormData) {
   revalidatePath("/admin");
 }
 
+const successMessages: Record<ReservationStatus, string> = {
+  pending: "Reserva actualizada.",
+  accepted: "Reserva aceptada. Email enviado al cliente.",
+  rejected: "Reserva rechazada. Email enviado al cliente.",
+  cancelled: "Reserva cancelada. Notificaciones enviadas."
+};
+
 async function updateReservationStatus(
   formData: FormData,
   status: ReservationStatus
-) {
+): Promise<ReservationActionResult> {
   const reservationId = String(formData.get("reservationId") ?? "");
   const { supabase, restaurant } = await getAdminContext();
 
   if (!restaurant || !reservationId) {
-    return;
+    return { status: "error", message: "No se pudo identificar la reserva." };
   }
 
   const { data, error } = await supabase
@@ -113,7 +139,10 @@ async function updateReservationStatus(
     .single();
 
   if (error || !data) {
-    return;
+    return {
+      status: "error",
+      message: error?.message ?? "No se pudo actualizar la reserva."
+    };
   }
 
   const context = {
@@ -149,4 +178,5 @@ async function updateReservationStatus(
   }
 
   revalidatePath("/admin");
+  return { status: "success", message: successMessages[status] };
 }
