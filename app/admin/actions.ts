@@ -11,22 +11,13 @@ import {
 } from "@/lib/email/send";
 import { mapReservation } from "@/lib/reservations/mappers";
 import type { ReservationStatus } from "@/types/domain";
+import type { ReservationActionResult } from "@/app/admin/action-types";
 
 export async function logoutAction() {
   const { supabase } = await getAdminContext();
   await supabase.auth.signOut();
   redirect("/admin/login");
 }
-
-export type ReservationActionResult = {
-  status: "idle" | "success" | "error";
-  message: string;
-};
-
-export const initialReservationActionState: ReservationActionResult = {
-  status: "idle",
-  message: ""
-};
 
 export async function acceptReservationAction(
   _prevState: ReservationActionResult,
@@ -150,31 +141,44 @@ async function updateReservationStatus(
     reservation: mapReservation(data)
   };
 
-  if (status === "accepted") {
-    await sendReservationAcceptedEmail(context);
-    await recordAnalyticsEvent({
-      restaurantId: restaurant.id,
-      eventName: "reservation_accepted",
-      metadata: { reservationId }
-    });
-  }
+  const logTag = `[admin:${status}] reservation=${reservationId} email=${context.reservation.email ?? "none"}`;
 
-  if (status === "rejected") {
-    await sendReservationRejectedEmail(context);
-    await recordAnalyticsEvent({
-      restaurantId: restaurant.id,
-      eventName: "reservation_rejected",
-      metadata: { reservationId }
-    });
-  }
+  try {
+    if (status === "accepted") {
+      console.log(`${logTag} sending acceptance email…`);
+      await sendReservationAcceptedEmail(context);
+      console.log(`${logTag} email step finished.`);
+      await recordAnalyticsEvent({
+        restaurantId: restaurant.id,
+        eventName: "reservation_accepted",
+        metadata: { reservationId }
+      });
+    }
 
-  if (status === "cancelled") {
-    await sendReservationCancelledEmails(context);
-    await recordAnalyticsEvent({
-      restaurantId: restaurant.id,
-      eventName: "reservation_cancelled",
-      metadata: { reservationId, source: "admin" }
-    });
+    if (status === "rejected") {
+      console.log(`${logTag} sending rejection email…`);
+      await sendReservationRejectedEmail(context);
+      console.log(`${logTag} email step finished.`);
+      await recordAnalyticsEvent({
+        restaurantId: restaurant.id,
+        eventName: "reservation_rejected",
+        metadata: { reservationId }
+      });
+    }
+
+    if (status === "cancelled") {
+      console.log(`${logTag} sending cancellation emails…`);
+      await sendReservationCancelledEmails(context);
+      console.log(`${logTag} email step finished.`);
+      await recordAnalyticsEvent({
+        restaurantId: restaurant.id,
+        eventName: "reservation_cancelled",
+        metadata: { reservationId, source: "admin" }
+      });
+    }
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : "unknown_error";
+    console.error(`${logTag} email/analytics failed:`, reason);
   }
 
   revalidatePath("/admin");
