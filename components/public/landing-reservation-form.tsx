@@ -183,9 +183,16 @@ export function LandingReservationForm({
           </label>
           <input
             id="reservation-phone"
+            autoComplete="tel"
             className={FIELD_INPUT_CLASS}
+            inputMode="tel"
+            maxLength={24}
+            minLength={7}
             name="phone"
+            pattern="[+()0-9\s.\-]{7,24}"
+            placeholder={t.phonePlaceholder}
             required
+            title={t.phoneHint}
             type="tel"
           />
         </div>

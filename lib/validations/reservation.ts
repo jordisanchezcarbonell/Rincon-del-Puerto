@@ -1,15 +1,22 @@
 import { z } from "zod";
 import { SEATING_PREFERENCES } from "@/types/domain";
 
-const phoneRegex = /^[+()\d\s.-]{6,24}$/;
+const phoneAllowedChars = /^[+()\d\s.-]+$/;
 
 export const reservationFormSchema = z.object({
   name: z.string().trim().min(2, "Indica tu nombre").max(120),
   phone: z
     .string()
     .trim()
-    .regex(phoneRegex, "Indica un teléfono válido")
-    .max(24),
+    .max(24, "Indica un teléfono válido")
+    .regex(phoneAllowedChars, "Indica un teléfono válido (solo dígitos y + - ( ))")
+    .refine(
+      (value) => {
+        const digits = value.replace(/\D/g, "");
+        return digits.length >= 7 && digits.length <= 15;
+      },
+      { message: "Indica un teléfono válido (entre 7 y 15 dígitos)" }
+    ),
   email: z
     .string()
     .trim()
