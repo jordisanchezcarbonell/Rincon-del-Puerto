@@ -63,10 +63,46 @@ export function getAvailabilitySlots(
   date: string,
   blockedSlots: BlockedSlotForAvailability[]
 ): AvailabilitySlot[] {
+  const now = getCurrentMadridDateTime();
   return getConfiguredTimeSlotsForDate(date).map((time) => ({
     time,
-    disabled: isTimeBlocked(time, blockedSlots)
+    disabled:
+      isTimeBlocked(time, blockedSlots) || isPastSlot(date, time, now)
   }));
+}
+
+function isPastSlot(
+  date: string,
+  time: string,
+  now: { date: string; time: string }
+) {
+  if (date < now.date) {
+    return true;
+  }
+  if (date > now.date) {
+    return false;
+  }
+  return time <= now.time;
+}
+
+function getCurrentMadridDateTime() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: RESTAURANT_TIMEZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).formatToParts(new Date());
+
+  const lookup = (type: string) =>
+    parts.find((part) => part.type === type)?.value ?? "00";
+
+  return {
+    date: `${lookup("year")}-${lookup("month")}-${lookup("day")}`,
+    time: `${lookup("hour")}:${lookup("minute")}`
+  };
 }
 
 export function getSelectableTimeSlots(

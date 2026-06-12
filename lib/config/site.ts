@@ -9,7 +9,7 @@ export const GOOGLE_MAPS_URL =
   "https://share.google/G6rthQkXG7LqNFKGU";
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://rincon-del-puerto.vercel.app";
 
 export const RESTAURANT_SLUG =
   process.env.NEXT_PUBLIC_RESTAURANT_SLUG ?? "rincon-del-puerto";
