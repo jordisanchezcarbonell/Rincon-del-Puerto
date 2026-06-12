@@ -18,6 +18,22 @@ const FIELD_INPUT_CLASS =
 const FIELD_LABEL_CLASS =
   "block text-xs font-semibold uppercase tracking-[0.22em] text-white/70";
 
+function RequiredMark({ label }: { label: string }) {
+  return (
+    <span aria-label={label} className="ml-1 text-terracotta-300">
+      *
+    </span>
+  );
+}
+
+function OptionalSuffix({ label }: { label: string }) {
+  return (
+    <span className="ml-2 text-[0.65rem] normal-case tracking-normal text-white/45">
+      ({label})
+    </span>
+  );
+}
+
 export function LandingReservationForm({
   initialDate,
   initialSlots,
@@ -78,7 +94,6 @@ export function LandingReservationForm({
   return (
     <form action={formAction} className="grid gap-7">
       <input name="locale" type="hidden" value={locale} />
-      <input name="email" type="hidden" value="" />
       <input name="allergies" type="hidden" value="" />
       <input name="seatingPreference" type="hidden" value="no_preference" />
       <input name="groupDetails" type="hidden" value="" />
@@ -90,10 +105,13 @@ export function LandingReservationForm({
         </div>
       ) : null}
 
+      <p className="text-xs text-white/55">{t.requiredLegend}</p>
+
       <div className="grid gap-7 sm:grid-cols-2">
         <div className="grid gap-2">
           <label className={FIELD_LABEL_CLASS} htmlFor="reservation-date">
             {t.date}
+            <RequiredMark label={t.requiredMark} />
           </label>
           <input
             id="reservation-date"
@@ -109,6 +127,7 @@ export function LandingReservationForm({
         <div className="grid gap-2">
           <label className={FIELD_LABEL_CLASS} htmlFor="reservation-time">
             {t.time}
+            <RequiredMark label={t.requiredMark} />
           </label>
           <select
             id="reservation-time"
@@ -128,6 +147,7 @@ export function LandingReservationForm({
         <div className="grid gap-2">
           <label className={FIELD_LABEL_CLASS} htmlFor="reservation-guests">
             {t.guestsShort}
+            <RequiredMark label={t.requiredMark} />
           </label>
           <input
             id="reservation-guests"
@@ -145,6 +165,7 @@ export function LandingReservationForm({
         <div className="grid gap-2">
           <label className={FIELD_LABEL_CLASS} htmlFor="reservation-name">
             {t.name}
+            <RequiredMark label={t.requiredMark} />
           </label>
           <input
             id="reservation-name"
@@ -155,9 +176,10 @@ export function LandingReservationForm({
           />
         </div>
 
-        <div className="grid gap-2 sm:col-span-2">
+        <div className="grid gap-2">
           <label className={FIELD_LABEL_CLASS} htmlFor="reservation-phone">
             {t.phone}
+            <RequiredMark label={t.requiredMark} />
           </label>
           <input
             id="reservation-phone"
@@ -165,6 +187,20 @@ export function LandingReservationForm({
             name="phone"
             required
             type="tel"
+          />
+        </div>
+
+        <div className="grid gap-2">
+          <label className={FIELD_LABEL_CLASS} htmlFor="reservation-email">
+            {t.email}
+            <RequiredMark label={t.requiredMark} />
+          </label>
+          <input
+            id="reservation-email"
+            className={FIELD_INPUT_CLASS}
+            name="email"
+            required
+            type="email"
           />
         </div>
       </div>
@@ -182,6 +218,7 @@ export function LandingReservationForm({
       <div className="grid gap-2">
         <label className={FIELD_LABEL_CLASS} htmlFor="reservation-notes">
           {t.notesShort}
+          <OptionalSuffix label={t.optionalSuffix} />
         </label>
         <textarea
           id="reservation-notes"
@@ -198,7 +235,10 @@ export function LandingReservationForm({
           required
           type="checkbox"
         />
-        <span>{t.privacy}</span>
+        <span>
+          {t.privacy}
+          <RequiredMark label={t.requiredMark} />
+        </span>
       </label>
 
       <button

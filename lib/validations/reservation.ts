@@ -13,9 +13,8 @@ export const reservationFormSchema = z.object({
   email: z
     .string()
     .trim()
-    .email("Indica un email válido")
-    .optional()
-    .or(z.literal("")),
+    .min(1, "Indica un email")
+    .email("Indica un email válido"),
   date: z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/),
   time: z.string().trim().regex(/^\d{2}:\d{2}$/),
   guests: z.coerce.number().int().min(1).max(40),

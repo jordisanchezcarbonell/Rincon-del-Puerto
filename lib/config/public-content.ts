@@ -134,7 +134,7 @@ export const PUBLIC_CONTENT = {
       guestsShort: "Personas",
       name: "Nombre",
       phone: "Teléfono",
-      email: "Email opcional",
+      email: "Email",
       seating: "Preferencia",
       terrace: "Terraza",
       inside: "Interior",
@@ -149,6 +149,9 @@ export const PUBLIC_CONTENT = {
       group:
         "Para grupos de más de 8 personas revisaremos la solicitud de forma personalizada.",
       groupDetails: "Información adicional del grupo",
+      requiredLegend: "Los campos con * son obligatorios",
+      requiredMark: "obligatorio",
+      optionalSuffix: "opcional",
       submit: "Enviar solicitud",
       submitting: "Enviando...",
       errors: {
@@ -345,7 +348,7 @@ export const PUBLIC_CONTENT = {
       guestsShort: "Guests",
       name: "Name",
       phone: "Phone",
-      email: "Optional email",
+      email: "Email",
       seating: "Preference",
       terrace: "Terrace",
       inside: "Inside",
@@ -360,6 +363,9 @@ export const PUBLIC_CONTENT = {
       group:
         "For groups over 8 people, the restaurant will review the request personally.",
       groupDetails: "Additional group information",
+      requiredLegend: "Fields marked with * are required",
+      requiredMark: "required",
+      optionalSuffix: "optional",
       submit: "Send request",
       submitting: "Sending...",
       errors: {
@@ -555,7 +561,7 @@ export const PUBLIC_CONTENT = {
       guestsShort: "Persones",
       name: "Nom",
       phone: "Telèfon",
-      email: "Correu opcional",
+      email: "Correu",
       seating: "Preferència",
       terrace: "Terrassa",
       inside: "Interior",
@@ -570,6 +576,9 @@ export const PUBLIC_CONTENT = {
       group:
         "Per a grups de més de 8 persones revisarem la sol·licitud de manera personalitzada.",
       groupDetails: "Informació addicional del grup",
+      requiredLegend: "Els camps amb * són obligatoris",
+      requiredMark: "obligatori",
+      optionalSuffix: "opcional",
       submit: "Enviar sol·licitud",
       submitting: "Enviant...",
       errors: {
